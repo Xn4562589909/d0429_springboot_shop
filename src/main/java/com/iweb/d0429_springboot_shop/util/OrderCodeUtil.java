@@ -18,14 +18,15 @@ public class OrderCodeUtil {
         String userNum = String.valueOf(userId);
         if (userNum.length()>=length){
             userNum = userNum.substring(0,5);
-            String str = sdf.format(new Date())+getNumber()+userNum;
+            String str = sdf.format(new Date())+userNum+getNumber();
             return str;
         } else {
-            StringBuilder str = new StringBuilder(sdf.format(new Date())+getNumber());
+            StringBuilder str = new StringBuilder(sdf.format(new Date()));
             for (int i = 0; i <length-userNum.length() ; i++) {
                 str.append('0');
             }
             str.append(userNum);
+            str.append(getNumber());
             return str.toString();
         }
     }

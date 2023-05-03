@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +39,9 @@ public class OrderController {
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public String update(int id){
         Order order = orderService.get(id);
-        order.setPayDate(new Date());
+        Date currentTime = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        order.setPayDate(dateFormat.format(currentTime));
         order.setStatus("waitDelivery");
         orderService.update(order);
         return "redirect:/fore/order/listOrder";
@@ -118,5 +121,16 @@ public class OrderController {
             req.getSession().setAttribute("productsComment",products);
         }
         return "fore/needLogin/review/commentProduct";
+    }
+
+    @RequestMapping(value = "/confirm",method = RequestMethod.GET)
+    public String confirm(int id){
+        Order order = orderService.get(id);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        order.setStatus("waitReview");
+        order.setConfirmDate(sdf.format(date));
+        orderService.update(order);
+        return "redirect:/fore/order/listOrder";
     }
 }

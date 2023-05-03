@@ -96,6 +96,11 @@
                                         <button type="button" class="btn btn-sm btn-info">前往支付</button>
                                     </a>
                                 </c:if>
+                                <c:if test="${order.status eq '待收货'}">
+                                    <a href="/fore/order/confirm?id=${order.id}">
+                                        <button type="button" class="btn btn-sm btn-info">确认收货</button>
+                                    </a>
+                                </c:if>
                                 <c:if test="${order.status eq '待评价'}">
                                     <a href="/fore/order/comment?id=${order.id}">
                                         <button type="button" class="btn btn-sm btn-info">评价商品</button>
